@@ -6,6 +6,7 @@ import {
   PublishToggle,
   RemoveSignupButton,
 } from "@/components/ListAdminControls";
+import SlotRowMenu from "@/components/SlotRowMenu";
 import { createClient } from "@/lib/supabase/server";
 import { getSiteUrl } from "@/lib/site";
 import { formatSlotDate, type Answer, type Question, type Signup, type Slot } from "@/lib/types";
@@ -114,6 +115,7 @@ export default async function ManageListPage({
                 <th className="py-2 pr-4 font-medium">Role</th>
                 <th className="py-2 pr-4 font-medium">Filled</th>
                 <th className="py-2 font-medium">Volunteers</th>
+                <th className="py-2 font-medium" />
               </tr>
             </thead>
             <tbody>
@@ -134,8 +136,21 @@ export default async function ManageListPage({
                       {slot.signups.length}/{slot.capacity}
                     </span>
                   </td>
-                  <td className="py-2 text-stone-600">
+                  <td className="py-2 pr-2 text-stone-600">
                     {slot.signups.map((s) => s.name).join(", ") || "—"}
+                  </td>
+                  <td className="py-2 text-right">
+                    <SlotRowMenu
+                      slot={{
+                        id: slot.id,
+                        slot_date: slot.slot_date,
+                        label: slot.label,
+                        details: slot.details,
+                        capacity: slot.capacity,
+                      }}
+                      signups={slot.signups.map((s) => ({ id: s.id, name: s.name }))}
+                      listId={list.id}
+                    />
                   </td>
                 </tr>
               ))}

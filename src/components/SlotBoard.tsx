@@ -36,8 +36,8 @@ export default function SlotBoard({ slug, slots, questions }: Props) {
         <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-800">
           <p className="font-semibold">You&apos;re signed up!</p>
           <p className="mt-1 text-sm">
-            Thanks for volunteering for {justSignedUp}. A confirmation email with a
-            link to edit or cancel your signup is on its way.
+            Thanks for volunteering for {justSignedUp}. If you need to make a
+            change, contact the coordinator listed above.
           </p>
         </div>
       )}

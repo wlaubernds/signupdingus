@@ -101,6 +101,7 @@ export async function POST(request: Request) {
   }
 
   const siteUrl = getSiteUrl();
+  const manageUrl = `${siteUrl}/s/${list.slug}/manage/${signup.edit_token}`;
   await sendConfirmationEmail({
     to: email,
     volunteerName: name,
@@ -110,7 +111,7 @@ export async function POST(request: Request) {
     location: list.location,
     contactName: list.contact_name,
     contactEmail: list.contact_email,
-    manageUrl: `${siteUrl}/s/${list.slug}/manage/${signup.edit_token}`,
+    manageUrl,
     publicUrl: `${siteUrl}/s/${list.slug}`,
   });
 

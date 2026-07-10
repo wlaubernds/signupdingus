@@ -163,6 +163,47 @@ export async function setPublished(listId: string, published: boolean) {
   return {};
 }
 
+export async function updateSlot(
+  slotId: string,
+  listId: string,
+  fields: { slot_date: string; label: string; details: string; capacity: number },
+): Promise<{ error?: string }> {
+  const supabase = await createClient();
+
+  if (!fields.slot_date) return { error: "Date is required." };
+
+  const { count } = await supabase
+    .from("signups")
+    .select("id", { count: "exact", head: true })
+    .eq("slot_id", slotId);
+  if (count !== null && fields.capacity < count) {
+    return {
+      error: `Capacity can't be less than the ${count} volunteer${count === 1 ? "" : "s"} already signed up. Remove them first.`,
+    };
+  }
+
+  const { error } = await supabase
+    .from("slots")
+    .update({
+      slot_date: fields.slot_date,
+      label: fields.label.trim() || "Volunteer",
+      details: fields.details.trim(),
+      capacity: Math.max(1, fields.capacity),
+    })
+    .eq("id", slotId);
+  if (error) return { error: error.message };
+  revalidatePath(`/dashboard/lists/${listId}`);
+  return {};
+}
+
+export async function deleteSlot(slotId: string, listId: string) {
+  const supabase = await createClient();
+  const { error } = await supabase.from("slots").delete().eq("id", slotId);
+  if (error) return { error: error.message };
+  revalidatePath(`/dashboard/lists/${listId}`);
+  return {};
+}
+
 export async function removeSignup(signupId: string, listId: string) {
   const supabase = await createClient();
   const { error } = await supabase.from("signups").delete().eq("id", signupId);
