@@ -76,8 +76,13 @@ export default function ManageSignupForm({ token, slug, initial, questions }: Pr
   return (
     <form onSubmit={save} className="space-y-4">
       <div>
-        <label className="label">Name *</label>
+        <label className="label" htmlFor="manage-name">
+          Name *
+        </label>
         <input
+          id="manage-name"
+          name="name"
+          autoComplete="name"
           className="input"
           required
           value={name}
@@ -86,12 +91,20 @@ export default function ManageSignupForm({ token, slug, initial, questions }: Pr
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="label">Email</label>
-          <input className="input" value={initial.email} disabled />
+          <label className="label" htmlFor="manage-email">
+            Email
+          </label>
+          <input id="manage-email" className="input" value={initial.email} disabled />
         </div>
         <div>
-          <label className="label">Phone</label>
+          <label className="label" htmlFor="manage-phone">
+            Phone
+          </label>
           <input
+            id="manage-phone"
+            name="phone"
+            autoComplete="tel"
+            type="tel"
             className="input"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}

@@ -191,8 +191,13 @@ function SignupDialog({
 
         <form onSubmit={submit} className="mt-5 space-y-4">
           <div>
-            <label className="label">Your name *</label>
+            <label className="label" htmlFor="signup-name">
+              Your name *
+            </label>
             <input
+              id="signup-name"
+              name="name"
+              autoComplete="name"
               className="input"
               required
               value={name}
@@ -201,8 +206,13 @@ function SignupDialog({
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label className="label">Email *</label>
+              <label className="label" htmlFor="signup-email">
+                Email *
+              </label>
               <input
+                id="signup-email"
+                name="email"
+                autoComplete="email"
                 className="input"
                 type="email"
                 required
@@ -211,9 +221,15 @@ function SignupDialog({
               />
             </div>
             <div>
-              <label className="label">Phone</label>
+              <label className="label" htmlFor="signup-phone">
+                Phone
+              </label>
               <input
+                id="signup-phone"
+                name="phone"
+                autoComplete="tel"
                 className="input"
+                type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
